@@ -10,12 +10,28 @@ export class DataBindingComponent implements OnInit {
   cursoAngular: boolean = true;
   urlImagem: string = 'http://via.placeholder.com/400x200';
 
+  valorAtual: string = '';
+  valorSalvo: string = '';
+
   getValor() {
     return 1;
   }
 
   getCurtirCurso() {
     return true;
+  }
+
+  botaoClicado() {
+    alert('Botão clicado!');
+  }
+
+  onKeyUp(evento: KeyboardEvent) {
+    // console.log((<HTMLInputElement>evento.target).value);
+    this.valorAtual = (<HTMLInputElement>evento.target).value;
+  }
+
+  salvarValor(valor: any) {
+    this.valorSalvo = valor;
   }
 
   constructor() {}
