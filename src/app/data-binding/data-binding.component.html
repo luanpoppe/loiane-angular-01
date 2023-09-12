@@ -51,7 +51,7 @@
   </article> -->
 </section>
 
-<section class="event-binding">
+<!-- <section class="event-binding">
   <article>
     <h3>Event binding</h3>
 
@@ -68,6 +68,34 @@
 
     <p>Valor atual: {{ valorAtual }}</p>
     <p>Valor atual: {{ valorSalvo }}</p>
+
+  </article>
+</section> -->
+
+<section>
+  <article>
+    <h3>Two Way data binding</h3>
+
+    <div>
+
+      <input type="text"
+      [value]="nome"
+      (input)="nome = input.value"
+      #input/>
+
+      <input type="text"
+      [(ngModel)]="nome"
+      />
+
+      <p>Você digitou: {{nome}}</p>
+
+    </div>
+
+    <div>
+      <p>Meu nome é {{pessoa.nome}} e tenho {{pessoa.idade}} anos.</p>
+      <input type="text" [(ngModel)]="pessoa.nome">
+      <input type="text" [(ngModel)]="pessoa.idade">
+    </div>
 
   </article>
 </section>
