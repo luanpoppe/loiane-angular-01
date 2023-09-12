@@ -23,6 +23,8 @@ export class DataBindingComponent implements OnInit {
     return 1;
   }
 
+  nomeDoCurso: string = 'Angular';
+
   getCurtirCurso() {
     return true;
   }
