@@ -19,6 +19,8 @@ export class DataBindingComponent implements OnInit {
     idade: 20,
   };
 
+  valorInicial = 15;
+
   getValor() {
     return 1;
   }
@@ -40,6 +42,10 @@ export class DataBindingComponent implements OnInit {
 
   salvarValor(valor: any) {
     this.valorSalvo = valor;
+  }
+
+  onMudouValor(evento: any) {
+    console.log(evento);
   }
 
   constructor() {}
