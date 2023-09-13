@@ -20,7 +20,7 @@ import { CursoNaoEncontradoComponent } from './curso-nao-encontrado/curso-nao-en
     CursoDetalheComponent,
     CursoNaoEncontradoComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, routing],
+  imports: [BrowserModule, AppRoutingModule, AppRoutingModule, routing],
   providers: [CursosService],
   bootstrap: [AppComponent],
 })
