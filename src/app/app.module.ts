@@ -7,10 +7,11 @@ import { LoginComponent } from './login/login.component';
 import { CursosService } from './cursos/cursos.service';
 import { AppRoutingModule } from './app.routing.module';
 import { AlunosModule } from './alunos/alunos.module';
+import { CursosModule } from './cursos/cursos.module';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, LoginComponent],
-  imports: [BrowserModule, AppRoutingModule, AlunosModule],
+  imports: [BrowserModule, AppRoutingModule, AlunosModule, CursosModule],
   providers: [CursosService],
   bootstrap: [AppComponent],
 })
