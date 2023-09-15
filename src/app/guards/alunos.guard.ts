@@ -12,7 +12,7 @@ export class AlunosGuard implements CanActivateChild {
     state: RouterStateSnapshot
   ): boolean {
     if (state.url.includes('editar')) {
-      return false;
+      // return false;
     }
     return true;
   }
