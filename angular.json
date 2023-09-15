@@ -3,13 +3,9 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "projeto-02": {
+    "forms-template": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        }
-      },
+      "schematics": {},
       "root": "",
       "sourceRoot": "src",
       "prefix": "app",
@@ -17,21 +13,19 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/projeto-02",
+            "outputPath": "dist/forms-template",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
-            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "./node_modules/materialize-css/dist/css/materialize.css"
+              "src/styles.css"
             ],
-            "scripts": ["./node_modules/materialize-css/dist/js/materialize.js"]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -70,10 +64,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "projeto-02:build:production"
+              "browserTarget": "forms-template:build:production"
             },
             "development": {
-              "browserTarget": "projeto-02:build:development"
+              "browserTarget": "forms-template:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -81,7 +75,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "projeto-02:build"
+            "browserTarget": "forms-template:build"
           }
         },
         "test": {
@@ -91,21 +85,17 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
-            "inlineStyleLanguage": "scss",
             "assets": [
               "src/favicon.ico",
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.css"
             ],
             "scripts": []
           }
         }
       }
     }
-  },
-  "cli": {
-    "analytics": false
   }
 }
