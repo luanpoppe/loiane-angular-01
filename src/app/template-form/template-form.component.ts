@@ -9,8 +9,8 @@ export class TemplateFormComponent implements OnInit {
   constructor() {}
 
   usuario: any = {
-    nome: 'Loiane',
-    email: 'loiane@email.com',
+    nome: null,
+    email: null,
   };
 
   onSubmit(form: any) {
