@@ -4,13 +4,21 @@
     <input
       type="text"
       class="form-control"
+      [class.is-invalid]="!nome.valid && nome.touched"
       id="nome"
       placeholder="Nome"
       name="nome"
       [(ngModel)]="usuario.nome"
       required
-      #nome
+      #nome="ngModel"
     />
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="!nome.valid && nome.touched"
+    >
+      Nome é obrigatório.
+    </div>
   </div>
 
   <div class="form-group">
@@ -25,7 +33,16 @@
       [(ngModel)]="usuario.email"
       required
       email
+      #email="ngModel"
+      [class.is-invalid]="!email.valid && email.touched"
     />
+    <div
+      class="alert alert-danger"
+      role="alert"
+      *ngIf="!email.valid && email.touched"
+    >
+      Email inválido.
+    </div>
   </div>
 
   <button type="submit" class="btn btn-primary">Submit</button>
