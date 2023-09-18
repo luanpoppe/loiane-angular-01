@@ -18,7 +18,10 @@ export class TemplateFormComponent implements OnInit {
   onSubmit(form: any) {
     console.log(form);
 
-    // console.log(this.usuario);
+    this.http
+      .post('enderecoDoServidor/formUsuario', JSON.stringify(form.value))
+      .pipe(map((res) => res))
+      .subscribe((dados) => console.log(dados));
   }
 
   ngOnInit(): void {}
