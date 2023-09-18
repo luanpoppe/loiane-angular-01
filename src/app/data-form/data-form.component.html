@@ -12,8 +12,14 @@
         id="nome"
         placeholder="Nome"
         formControlName="nome"
+        [ngClass]="aplicaCssErro('nome')"
       />
     </div>
+
+    <app-campo-control-erro
+      [mostrarErro]="verificaValidTouched('nome')"
+      [msgErro]="'Nome é obrigatório'"
+    ></app-campo-control-erro>
   </div>
 
   <!-- Email -->
@@ -29,8 +35,14 @@
         class="form-control"
         id="email"
         placeholder="Email"
+        [ngClass]="aplicaCssErro('email')"
       />
     </div>
+
+    <app-campo-control-erro
+      [mostrarErro]="verificaValidTouched('email')"
+      [msgErro]="'Email é obrigatório'"
+    ></app-campo-control-erro>
   </div>
 
   <button type="submit" class="btn btn-primary">Submit</button>
