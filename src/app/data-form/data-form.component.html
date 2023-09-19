@@ -215,6 +215,16 @@
     </div>
   </div>
 
+  <div class="form-group">
+    <div class="col-3">
+      <div class="checkbox" [ngClass]="aplicaCssErro('termos')">
+        <label class="checkbox-inline">
+          <input formControlName="termos" type="checkbox" /> Aceito os termos
+        </label>
+      </div>
+    </div>
+  </div>
+
   <button type="submit" class="btn btn-primary">Submit</button>
   <button class="btn btn-default" (click)="resetar()">Cancelar</button>
   <button class="btn btn-info" (click)="setarCargo()">Cargo</button>
