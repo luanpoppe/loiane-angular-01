@@ -1,3 +1,4 @@
+import { VerificaEmailService } from './services/verifica-email.service';
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
@@ -31,7 +32,8 @@ export class DataFormComponent implements OnInit {
     private dropdownService: DropdownService,
     private formBuilder: FormBuilder,
     private http: HttpClient,
-    private cepService: ConsultaCepService
+    private cepService: ConsultaCepService,
+    private verificaEmailService: VerificaEmailService
   ) {}
 
   ngOnInit(): void {
@@ -39,6 +41,8 @@ export class DataFormComponent implements OnInit {
     //   nome: new FormControl('Loiane'),
     //   email: new FormControl(null),
     // });
+
+    // this.verificaEmailService.verificarEmail('emai@email.com').subscribe();
 
     this.estados = this.dropdownService.getEstadoBr();
 
@@ -50,7 +54,11 @@ export class DataFormComponent implements OnInit {
 
     this.formulario = this.formBuilder.group({
       nome: [null, Validators.required],
-      email: [null, [Validators.required, Validators.email]],
+      email: [
+        null,
+        [Validators.required, Validators.email],
+        [this.validarEmail.bind(this)],
+      ],
       confirmarEmail: [null, [FormValidations.equalsTo('email')]],
 
       endereco: this.formBuilder.group({
@@ -190,5 +198,13 @@ export class DataFormComponent implements OnInit {
     return this.formulario.get('frameworks')
       ? (<FormArray>this.formulario.get('frameworks')).controls
       : null;
+  }
+
+  validarEmail(formControl: FormControl) {
+    return this.verificaEmailService
+      .verificarEmail(formControl.value)
+      .pipe(
+        map((emailExiste) => (emailExiste ? { emailInvalido: true } : null))
+      );
   }
 }
