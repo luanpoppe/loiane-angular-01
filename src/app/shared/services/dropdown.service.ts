@@ -10,6 +10,6 @@ export class DropdownService {
   constructor(private http: HttpClient) {}
 
   getEstadoBr() {
-    return this.http.get<EstadoBr>('assets/dados/estadosbr.json').pipe();
+    return this.http.get('assets/dados/estadosbr.json').pipe(map((res) => res));
   }
 }
