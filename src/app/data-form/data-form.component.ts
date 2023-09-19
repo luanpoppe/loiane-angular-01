@@ -54,7 +54,7 @@ export class DataFormComponent implements OnInit {
 
       endereco: this.formBuilder.group({
         rua: [null, Validators.required],
-        cep: [null, Validators.required],
+        cep: [null, [Validators.required, FormValidations.cepValidator]],
         numero: [null, Validators.required],
         complemento: [null],
         bairro: [null, Validators.required],
