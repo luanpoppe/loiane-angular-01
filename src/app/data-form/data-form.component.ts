@@ -6,7 +6,7 @@ import {
   FormBuilder,
   Validators,
 } from '@angular/forms';
-import { Observable, map } from 'rxjs';
+import { map } from 'rxjs';
 import { DropdownService } from '../shared/services/dropdown.service';
 import { EstadoBr } from '../shared/models/estado-br.model';
 import { ConsultaCepService } from '../shared/services/consulta-cep.service';
@@ -21,6 +21,7 @@ export class DataFormComponent implements OnInit {
   estados!: any;
   cargos!: any[];
   tecnologias!: any[];
+  newsletterOp!: any[];
 
   constructor(
     private dropdownService: DropdownService,
@@ -41,6 +42,8 @@ export class DataFormComponent implements OnInit {
 
     this.tecnologias = this.dropdownService.getTecnologias();
 
+    this.newsletterOp = this.dropdownService.getNewsletter();
+
     this.formulario = this.formBuilder.group({
       nome: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
@@ -57,6 +60,7 @@ export class DataFormComponent implements OnInit {
 
       cargo: [null],
       tecnologia: [null],
+      newsletter: ['s'],
     });
   }
 
