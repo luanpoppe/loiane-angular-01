@@ -37,13 +37,6 @@ export class DataFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.formulario = new FormGroup({
-    //   nome: new FormControl('Loiane'),
-    //   email: new FormControl(null),
-    // });
-
-    // this.verificaEmailService.verificarEmail('emai@email.com').subscribe();
-
     this.estados = this.dropdownService.getEstadoBr();
 
     this.cargos = this.dropdownService.getCargos();
@@ -76,6 +69,22 @@ export class DataFormComponent implements OnInit {
       newsletter: ['s'],
       termos: [null, Validators.pattern('true')],
       frameworks: this.buildFrameworks(),
+    });
+
+    this.formulario.get('endereco.cep')?.statusChanges.subscribe((status) => {
+      if (status === 'VALID') {
+        this.cepService
+          .consultaCEP(this.formulario.get('endereco.cep')!.value)
+          .subscribe((dados) => {
+            this.populaDadosForm(dados);
+
+            console.log(
+              this.cepService.consultaCEP(
+                this.formulario.get('endereco.cep')!.value
+              )
+            );
+          });
+      }
     });
   }
 
