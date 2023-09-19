@@ -5,6 +5,7 @@ import {
   FormControl,
   FormBuilder,
   Validators,
+  FormArray,
 } from '@angular/forms';
 import { map } from 'rxjs';
 import { DropdownService } from '../shared/services/dropdown.service';
@@ -22,6 +23,8 @@ export class DataFormComponent implements OnInit {
   cargos!: any[];
   tecnologias!: any[];
   newsletterOp!: any[];
+
+  frameworks = ['Angular', 'React', 'Vue', 'Sencha'];
 
   constructor(
     private dropdownService: DropdownService,
@@ -62,11 +65,27 @@ export class DataFormComponent implements OnInit {
       tecnologia: [null],
       newsletter: ['s'],
       termos: [null, Validators.pattern('true')],
+      frameworks: this.buildFrameworks(),
     });
   }
 
+  buildFrameworks() {
+    const values = this.frameworks.map((v) => new FormControl(false));
+    return this.formBuilder.array(values);
+  }
+
   onSubmit() {
-    console.log(this.formulario.value);
+    console.log(this.formulario);
+
+    let valueSubmit = Object.assign({}, this.formulario.value);
+
+    valueSubmit = Object.assign(valueSubmit, {
+      frameworks: valueSubmit.frameworks
+        .map((v: any, i: any) => (v ? this.frameworks[i] : null))
+        .filter((v: any) => v !== null),
+    });
+
+    console.log(valueSubmit);
 
     if (this.formulario.valid) {
       this.http
@@ -80,7 +99,7 @@ export class DataFormComponent implements OnInit {
           (error: any) => alert('erro')
         );
     } else {
-      this.verificaValidacoesForm(this.formulario);
+      this.verificaValidacoesForm(valueSubmit);
     }
   }
 
@@ -160,5 +179,11 @@ export class DataFormComponent implements OnInit {
 
   setarTecnologias() {
     this.formulario.get('tecnologia')?.setValue(['java', 'javascript', 'php']);
+  }
+
+  getFrameworksControls() {
+    return this.formulario.get('frameworks')
+      ? (<FormArray>this.formulario.get('frameworks')).controls
+      : null;
   }
 }
