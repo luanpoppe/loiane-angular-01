@@ -20,6 +20,7 @@ export class DataFormComponent implements OnInit {
   formulario!: FormGroup;
   estados!: any;
   cargos!: any[];
+  tecnologias!: any[];
 
   constructor(
     private dropdownService: DropdownService,
@@ -38,6 +39,8 @@ export class DataFormComponent implements OnInit {
 
     this.cargos = this.dropdownService.getCargos();
 
+    this.tecnologias = this.dropdownService.getTecnologias();
+
     this.formulario = this.formBuilder.group({
       nome: [null, Validators.required],
       email: [null, [Validators.required, Validators.email]],
@@ -53,6 +56,7 @@ export class DataFormComponent implements OnInit {
       }),
 
       cargo: [null],
+      tecnologia: [null],
     });
   }
 
@@ -147,5 +151,9 @@ export class DataFormComponent implements OnInit {
     return obj1 && obj2
       ? obj1.nome === obj2.nome && obj1.nivel === obj2.nivel
       : obj1 && obj2;
+  }
+
+  setarTecnologias() {
+    this.formulario.get('tecnologia')?.setValue(['java', 'javascript', 'php']);
   }
 }
