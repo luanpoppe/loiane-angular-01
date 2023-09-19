@@ -19,6 +19,7 @@ import { ConsultaCepService } from '../shared/services/consulta-cep.service';
 export class DataFormComponent implements OnInit {
   formulario!: FormGroup;
   estados!: any;
+  cargos!: any[];
 
   constructor(
     private dropdownService: DropdownService,
@@ -35,13 +36,7 @@ export class DataFormComponent implements OnInit {
 
     this.estados = this.dropdownService.getEstadoBr();
 
-    // this.dropdownService.getEstadoBr().subscribe((res: EstadoBr) => {
-    //   .pipe(map(estado) => )
-
-    //   this.estados.push(res);
-    //   this.estados = this.estados[0]
-    //   console.log(this.estados[0]);
-    // });
+    this.cargos = this.dropdownService.getCargos();
 
     this.formulario = this.formBuilder.group({
       nome: [null, Validators.required],
@@ -56,6 +51,8 @@ export class DataFormComponent implements OnInit {
         cidade: [null, Validators.required],
         estado: [null, Validators.required],
       }),
+
+      cargo: [null],
     });
   }
 
@@ -139,5 +136,16 @@ export class DataFormComponent implements OnInit {
         estado: null,
       },
     });
+  }
+
+  setarCargo() {
+    const cargo = { nome: 'Dev', nivel: 'Pleno', desc: 'Dev Pl' };
+    this.formulario.get('cargo')?.setValue(cargo);
+  }
+
+  compararCargos(obj1: any, obj2: any) {
+    return obj1 && obj2
+      ? obj1.nome === obj2.nome && obj1.nivel === obj2.nivel
+      : obj1 && obj2;
   }
 }
