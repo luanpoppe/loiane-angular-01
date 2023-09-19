@@ -16,10 +16,8 @@
       />
     </div>
 
-    <app-campo-control-erro
-      [mostrarErro]="verificaValidTouched('nome')"
-      [msgErro]="'Nome é obrigatório'"
-    ></app-campo-control-erro>
+    <app-error-msg [control]="$any(formulario).controls.nome" label="Nome">
+    </app-error-msg>
   </div>
 
   <!-- Email -->
