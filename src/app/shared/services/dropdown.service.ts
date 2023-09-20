@@ -14,12 +14,10 @@ export class DropdownService {
   }
 
   getCidades(idEstado: number) {
-    return this.http
-      .get('assets/models/cidades.json')
-      .pipe(map((res) => res))
-      .pipe(
-        map((cidades: any) => cidades.filter((c: any) => c.estado == idEstado))
-      );
+    return this.http.get('assets/dados/cidades.json').pipe(
+      map((res) => res),
+      map((cidades: any) => cidades.filter((c: any) => c.estado == idEstado))
+    );
   }
 
   getCargos() {

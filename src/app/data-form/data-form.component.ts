@@ -8,7 +8,7 @@ import {
   Validators,
   FormArray,
 } from '@angular/forms';
-import { empty, map, switchMap } from 'rxjs';
+import { EMPTY, empty, map, switchMap, tap } from 'rxjs';
 import { DropdownService } from '../shared/services/dropdown.service';
 import { EstadoBr } from '../shared/models/estado-br.model';
 import { ConsultaCepService } from '../shared/services/consulta-cep.service';
@@ -28,6 +28,14 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
   tecnologias!: any[];
   newsletterOp!: any[];
 
+  public get f() {
+    return this.formulario;
+  }
+
+  public get endereco() {
+    return this.f.get('endereco');
+  }
+
   frameworks = ['Angular', 'React', 'Vue', 'Sencha'];
 
   constructor(
@@ -42,9 +50,9 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
 
   ngOnInit(): void {
     // this.estados = this.dropdownService.getEstadoBr();
-    this.dropdownService
-      .getEstadoBr()
-      .subscribe((dados) => (this.estados = dados));
+    this.dropdownService.getEstadoBr().subscribe((dados) => {
+      this.estados = dados;
+    });
 
     this.cargos = this.dropdownService.getCargos();
 
@@ -80,7 +88,8 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
       frameworks: this.buildFrameworks(),
     });
 
-    this.formulario.get('endereco.cep')?.statusChanges.subscribe((status) => {
+    this.endereco.get('cep')?.statusChanges.subscribe((status) => {
+      console.log('mudando status');
       if (status === 'VALID') {
         this.cepService
           .consultaCEP(this.formulario.get('endereco.cep')!.value)
@@ -96,18 +105,36 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
       }
     });
 
-    this.formulario
-      .get('endereco.estado')
-      ?.valueChanges.pipe(
-        map((estado) => this.estados.filter((e: any) => e.sigla === estado))
-      )
-      .pipe(
+    // console.log(this.formulario);
+
+    this.endereco
+      .get('estado')
+      .valueChanges.pipe(
+        tap((a) => console.log(a)),
+        map((estado) => this.estados.filter((e: any) => e.sigla === estado)),
         map((estados) =>
-          estados && estados.length > 0 ? estados[0].id : empty()
+          estados && estados.length > 0 ? estados[0].id : EMPTY
+        ),
+        map((estadoId) =>
+          this.dropdownService.getCidades(estadoId).subscribe((cidades) => {
+            this.cidades = cidades;
+          })
         )
       )
-      .pipe(switchMap((estadoId) => this.dropdownService.getCidades(estadoId)))
-      .subscribe((cidades) => (this.cidades = cidades));
+      .subscribe();
+  }
+
+  loadCities() {
+    const estadoId = this.estados.find(
+      (estado) => estado.sigla == this.endereco.value.estado
+    ).id;
+    if (estadoId) {
+      this.dropdownService.getCidades(estadoId).subscribe({
+        next: (cidades) => {
+          this.cidades = cidades;
+        },
+      });
+    }
   }
 
   buildFrameworks() {
@@ -125,7 +152,7 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
 
     valueSubmit = Object.assign(valueSubmit, {
       frameworks: valueSubmit.frameworks
-        .map((v: any, i: any) => (v ? this.frameworks[i] : null))
+        .map((v, i) => (v ? this.frameworks[i] : null))
         .filter((v: any) => v !== null),
     });
     console.log(valueSubmit);
