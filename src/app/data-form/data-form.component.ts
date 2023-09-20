@@ -13,14 +13,15 @@ import { DropdownService } from '../shared/services/dropdown.service';
 import { EstadoBr } from '../shared/models/estado-br.model';
 import { ConsultaCepService } from '../shared/services/consulta-cep.service';
 import { FormValidations } from '../shared/services/form-validations';
+import { BaseFormComponent } from '../shared/base-form/base-form.component';
 
 @Component({
   selector: 'app-data-form',
   templateUrl: './data-form.component.html',
   styleUrls: ['./data-form.component.css'],
 })
-export class DataFormComponent implements OnInit {
-  formulario!: FormGroup;
+export class DataFormComponent extends BaseFormComponent implements OnInit {
+  // formulario!: FormGroup;
   estados!: any;
   cargos!: any[];
   tecnologias!: any[];
@@ -34,7 +35,9 @@ export class DataFormComponent implements OnInit {
     private http: HttpClient,
     private cepService: ConsultaCepService,
     private verificaEmailService: VerificaEmailService
-  ) {}
+  ) {
+    super();
+  }
 
   ngOnInit(): void {
     this.estados = this.dropdownService.getEstadoBr();
@@ -96,7 +99,7 @@ export class DataFormComponent implements OnInit {
     );
   }
 
-  onSubmit() {
+  submit() {
     console.log(this.formulario);
 
     let valueSubmit = Object.assign({}, this.formulario.value);
@@ -106,50 +109,18 @@ export class DataFormComponent implements OnInit {
         .map((v: any, i: any) => (v ? this.frameworks[i] : null))
         .filter((v: any) => v !== null),
     });
-
     console.log(valueSubmit);
 
-    if (this.formulario.valid) {
-      this.http
-        .post('https://httpbin.org/post', JSON.stringify(this.formulario.value))
-        .pipe(map((dados: any) => dados))
-        .subscribe(
-          (dados) => {
-            console.log(dados);
-            // this.resetar();
-          },
-          (error: any) => alert('erro')
-        );
-    } else {
-      this.verificaValidacoesForm(valueSubmit);
-    }
-  }
-
-  verificaValidacoesForm(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((campo) => {
-      console.log(campo);
-      const controle = formGroup.get(campo);
-      controle?.markAsTouched();
-      if (controle instanceof FormGroup) {
-        this.verificaValidacoesForm(controle);
-      }
-    });
-  }
-
-  resetar() {
-    this.formulario.reset();
-  }
-
-  verificaValidTouched(campo: string): any {
-    return (
-      !this.formulario.get(campo)?.valid && this.formulario.get(campo)?.touched
-    );
-  }
-
-  aplicaCssErro(campo: string) {
-    return {
-      'is-invalid': this.verificaValidTouched(campo),
-    };
+    this.http
+      .post('https://httpbin.org/post', JSON.stringify(this.formulario.value))
+      .pipe(map((dados: any) => dados))
+      .subscribe(
+        (dados) => {
+          console.log(dados);
+          // this.resetar();
+        },
+        (error: any) => alert('erro')
+      );
   }
 
   consultaCEP() {
