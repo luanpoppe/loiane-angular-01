@@ -8,7 +8,7 @@ import {
   Validators,
   FormArray,
 } from '@angular/forms';
-import { map } from 'rxjs';
+import { empty, map, switchMap } from 'rxjs';
 import { DropdownService } from '../shared/services/dropdown.service';
 import { EstadoBr } from '../shared/models/estado-br.model';
 import { ConsultaCepService } from '../shared/services/consulta-cep.service';
@@ -23,6 +23,7 @@ import { BaseFormComponent } from '../shared/base-form/base-form.component';
 export class DataFormComponent extends BaseFormComponent implements OnInit {
   // formulario!: FormGroup;
   estados!: any;
+  cidades!: any;
   cargos!: any[];
   tecnologias!: any[];
   newsletterOp!: any[];
@@ -40,13 +41,18 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.estados = this.dropdownService.getEstadoBr();
+    // this.estados = this.dropdownService.getEstadoBr();
+    this.dropdownService
+      .getEstadoBr()
+      .subscribe((dados) => (this.estados = dados));
 
     this.cargos = this.dropdownService.getCargos();
 
     this.tecnologias = this.dropdownService.getTecnologias();
 
     this.newsletterOp = this.dropdownService.getNewsletter();
+
+    // this.dropdownService.getCidades(8).subscribe(console.log);
 
     this.formulario = this.formBuilder.group({
       nome: [null, [Validators.required, Validators.minLength(3)]],
@@ -89,6 +95,19 @@ export class DataFormComponent extends BaseFormComponent implements OnInit {
           });
       }
     });
+
+    this.formulario
+      .get('endereco.estado')
+      ?.valueChanges.pipe(
+        map((estado) => this.estados.filter((e: any) => e.sigla === estado))
+      )
+      .pipe(
+        map((estados) =>
+          estados && estados.length > 0 ? estados[0].id : empty()
+        )
+      )
+      .pipe(switchMap((estadoId) => this.dropdownService.getCidades(estadoId)))
+      .subscribe((cidades) => (this.cidades = cidades));
   }
 
   buildFrameworks() {

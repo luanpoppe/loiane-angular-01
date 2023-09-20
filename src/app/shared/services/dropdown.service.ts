@@ -13,6 +13,15 @@ export class DropdownService {
     return this.http.get('assets/dados/estadosbr.json').pipe(map((res) => res));
   }
 
+  getCidades(idEstado: number) {
+    return this.http
+      .get('assets/models/cidades.json')
+      .pipe(map((res) => res))
+      .pipe(
+        map((cidades: any) => cidades.filter((c: any) => c.estado == idEstado))
+      );
+  }
+
   getCargos() {
     return [
       { nome: 'Dev', nivel: 'Junior', desc: 'Dev Jr' },
