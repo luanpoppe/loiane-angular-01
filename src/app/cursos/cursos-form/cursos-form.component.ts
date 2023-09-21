@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { CursosService } from '../cursos.service';
 import { AlertModelService } from 'src/app/shared/alert-model.service';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
-import { map, switchMap } from 'rxjs';
+import { Cursos2Service } from '../cursos-2.service';
 
 @Component({
   selector: 'app-cursos-form',
@@ -17,7 +16,7 @@ export class CursosFormComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private service: CursosService,
+    private service: Cursos2Service,
     private modal: AlertModelService,
     private location: Location,
     private route: ActivatedRoute

@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { CursosService } from '../cursos.service';
 import { Curso } from '../curso';
 import { Observable, empty, EMPTY, Subject, switchMap } from 'rxjs';
 import { catchError, take } from 'rxjs/operators';
@@ -7,6 +6,7 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { AlertModalComponent } from 'src/app/shared/alert-modal/alert-modal.component';
 import { AlertModelService } from 'src/app/shared/alert-model.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Cursos2Service } from '../cursos-2.service';
 
 @Component({
   selector: 'app-cursos-lista',
@@ -27,7 +27,7 @@ export class CursosListaComponent implements OnInit {
   cursoSelecionado: Curso;
 
   constructor(
-    private service: CursosService,
+    private service: Cursos2Service,
     private alertService: AlertModelService,
     private router: Router,
     private route: ActivatedRoute,
