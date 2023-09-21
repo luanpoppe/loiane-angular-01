@@ -22,9 +22,8 @@ export class CursosListaComponent implements OnInit {
 
   constructor(
     private service: CursosService,
-    private alertService: AlertModelService
-  ) // private modalService: BsModalService
-  {}
+    private alertService: AlertModelService // private modalService: BsModalService
+  ) {}
 
   ngOnInit(): void {
     this.onRefresh();
@@ -40,11 +39,11 @@ export class CursosListaComponent implements OnInit {
       })
     );
 
-    this.service.list().subscribe(
-      (dados) => console.log(dados),
-      (error) => console.error(error),
-      () => console.log('Observable completo')
-    );
+    // this.service.list().subscribe(
+    //   (dados) => console.log(dados),
+    //   (error) => console.error(error),
+    //   () => console.log('Observable completo')
+    // );
   }
 
   handleError() {
