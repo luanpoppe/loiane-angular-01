@@ -46,4 +46,30 @@ export class UploadFileComponent implements OnInit {
         .subscribe((response) => console.log('Upload Concluído'));
     }
   }
+
+  onDownloadExcel() {
+    this.service
+      .download('http://localhost:8000/downloadExcel')
+      .subscribe((res: any) => {
+        const file = new Blob([res], {
+          type: res.type,
+        });
+
+        // Internet Explorer
+        if (window.navigator && (<any>window.navigator).msSaveOrOpenBlob) {
+          (<any>window.navigator).msSaveOrOpenBlob(file);
+        }
+
+        const blob = window.URL.createObjectURL(file);
+        const link = document.createElement('a');
+        link.href = blob;
+        link.download = 'report.xlsx';
+
+        link.click();
+        window.URL.revokeObjectURL(blob);
+        link.remove();
+      });
+  }
+
+  onDownloadPdf() {}
 }
