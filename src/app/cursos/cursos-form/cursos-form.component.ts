@@ -3,6 +3,8 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { CursosService } from '../cursos.service';
 import { AlertModelService } from 'src/app/shared/alert-model.service';
 import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { map, switchMap } from 'rxjs';
 
 @Component({
   selector: 'app-cursos-form',
@@ -17,11 +19,29 @@ export class CursosFormComponent implements OnInit {
     private fb: FormBuilder,
     private service: CursosService,
     private modal: AlertModelService,
-    private location: Location
+    private location: Location,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit(): void {
+    // this.route.params.subscribe((params) => {
+    //   const id = params['id'];
+    //   console.log(id);
+    //   const curso$ = this.service.loadById(id);
+    //   curso$.subscribe((curso) => {
+    //     this.updateForm(curso);
+    //   });
+    // });
+
+    this.route.params
+      .pipe(
+        map((params) => params['id']),
+        switchMap((id) => this.service.loadById(id))
+      )
+      .subscribe((curso) => this.updateForm(curso));
+
     this.form = this.fb.group({
+      id: [null],
       nome: [
         null,
         [
@@ -30,6 +50,13 @@ export class CursosFormComponent implements OnInit {
           Validators.maxLength(20),
         ],
       ],
+    });
+  }
+
+  updateForm(curso) {
+    this.form.patchValue({
+      id: curso.id,
+      nome: curso.nome,
     });
   }
 
