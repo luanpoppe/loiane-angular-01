@@ -15,9 +15,16 @@ const routes: Routes = [
       ),
   },
   {
+    path: 'busca-reativa',
+    loadChildren: () =>
+      import('./reactive-search/reactive-search.module').then(
+        (m) => m.ReactiveSearchModule
+      ),
+  },
+  {
     path: '',
     pathMatch: 'full',
-    redirectTo: 'upload',
+    redirectTo: 'busca-reativa',
   },
 ];
 
