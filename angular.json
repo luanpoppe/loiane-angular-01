@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "modulo-servicos": {
+    "modulo-diretivas": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/modulo-servicos",
+            "outputPath": "dist/modulo-diretivas",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "modulo-servicos:build:production"
+              "browserTarget": "modulo-diretivas:build:production"
             },
             "development": {
-              "browserTarget": "modulo-servicos:build:development"
+              "browserTarget": "modulo-diretivas:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "modulo-servicos:build"
+            "browserTarget": "modulo-diretivas:build"
           }
         },
         "test": {

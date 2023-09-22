@@ -1,14 +1,18 @@
-import { CriarCursoModule } from './criar-curso/criar-curso.module';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { CursosModule } from './cursos/cursos.module';
+import { DiretivaNgifComponent } from './diretiva-ngif/diretiva-ngif.component';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [BrowserModule, CriarCursoModule, CursosModule],
+  declarations: [
+    AppComponent,
+    DiretivaNgifComponent
+  ],
+  imports: [
+    BrowserModule
+  ],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
-export class AppModule {}
+export class AppModule { }
