@@ -28,7 +28,7 @@ export class UploadFileComponent implements OnInit {
       fileNames.push(selectedFiles[i].name);
       this.files.add(selectedFiles[i]);
     }
-    document.getElementById('customFileLabel').innerHTML = fileNames.join(', ');
+    // document.getElementById('customFileLabel').innerHTML = fileNames.join(', ');
     this.progress = 0;
   }
 
@@ -48,9 +48,9 @@ export class UploadFileComponent implements OnInit {
   }
 
   onDownloadExcel() {
-    this.service
-      .download('http://localhost:8000/downloadExcel')
-      .subscribe((res: any) => {
+    this.service.download('http://localhost:8000/downloadExcel').subscribe({
+      next: (res: any) => {
+        console.log(res);
         const file = new Blob([res], {
           type: res.type,
         });
@@ -68,7 +68,11 @@ export class UploadFileComponent implements OnInit {
         link.click();
         window.URL.revokeObjectURL(blob);
         link.remove();
-      });
+      },
+      error: (error: any) => {
+        console.error('Houve um erro', error);
+      },
+    });
   }
 
   onDownloadPdf() {}
