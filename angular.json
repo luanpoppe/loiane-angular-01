@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "modulo-diretivas": {
+    "modulo-pipes": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/modulo-diretivas",
+            "outputPath": "dist/modulo-pipes",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "modulo-diretivas:build:production"
+              "browserTarget": "modulo-pipes:build:production"
             },
             "development": {
-              "browserTarget": "modulo-diretivas:build:development"
+              "browserTarget": "modulo-pipes:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "modulo-diretivas:build"
+            "browserTarget": "modulo-pipes:build"
           }
         },
         "test": {
@@ -96,12 +96,9 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.scss",
-              "node_modules/bootstrap/dist/css/bootstrap.css"
+              "src/styles.scss"
             ],
-            "scripts": [
-              "node_modules/bootstrap/dist/js/bootstrap.js"
-            ]
+            "scripts": []
           }
         }
       }
