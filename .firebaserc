@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "curso-angular-luan-b25b9"
+  },
+  "targets": {
+    "curso-angular-luan-b25b9": {
+      "hosting": {
+        "requests-http": [
+          "curso-angular-luan-b25b9"
+        ]
+      }
+    }
   }
 }
